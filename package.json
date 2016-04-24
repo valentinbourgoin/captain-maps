@@ -1,0 +1,17 @@
+{
+  "name": "captain-maps",
+  "version": "1.0.0",
+  "description": "Google maps viewer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Valentin Bourgoin <valentin.bourgoin@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "q": "^1.4.1",
+    "vue": "^1.0.21",
+    "vue-google-maps": "^0.1.17"
+  }
+}
