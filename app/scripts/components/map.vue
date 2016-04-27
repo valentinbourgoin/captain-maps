@@ -13,10 +13,8 @@
             <marker
                 v-for="m in markers"
                 :position.sync="m.position"
-                :icon.sync="m.icon"
                 :clickable.sync="markersOptions.clickable"
                 :draggable.sync="markersOptions.draggable"
-                :opacity.sync="m.opacity"
                 :title.sync="m.title"
             </marker>
         </map>
@@ -64,11 +62,13 @@
                 this.geocode(this.query).then(function() {
                     
                     // Search
-                    // @todo
-                    console.log('search');
-                    vm.$http.get('http://demo2503145.mockable.io/stations').then(function(data) {
-
-                        // @todo : Store data result in markers array
+                    vm.$http.get('http://demo2503145.mockable.io/stations').then(function(stations) {
+                        for(var d of stations.data.data) {
+                            vm.markers.push({
+                                title: d.name, 
+                                postion: {lat: d.latitude, lg: d.longitude}
+                            });
+                        };
 
                     }, function(error) {
                         console.warn(error);

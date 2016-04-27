@@ -23,8 +23,8 @@ gulp.task('webserver', function() {
 });
  
 gulp.task('livereload', function() {
-  gulp.src(['static/styles/*.css', 'static/scripts/*.js'])
-    // .pipe(watch())
+  gulp.src(['static/styles/*.scss', 'static/scripts/*.js'])
+    .pipe(watch())
     .pipe(connect.reload());
 });
  
