@@ -86,7 +86,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), true)
 	  if (!hotAPI.compatible) return
-	  var id = "/Users/Valentin/Projects/captain-maps/app/scripts/components/map.vue"
+	  var id = "/Users/Valentin/Projects/captain-maps/front/app/scripts/components/map.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -127,10 +127,8 @@
 	//             <marker
 	//                 v-for="m in markers"
 	//                 :position.sync="m.position"
-	//                 :icon.sync="m.icon"
 	//                 :clickable.sync="markersOptions.clickable"
 	//                 :draggable.sync="markersOptions.draggable"
-	//                 :opacity.sync="m.opacity"
 	//                 :title.sync="m.title"
 	//             </marker>
 	//         </map>
@@ -185,7 +183,6 @@
 	                        for (var _iterator = (0, _getIterator3.default)(stations.data.data), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                            var d = _step.value;
 
-	                            console.log(d);
 	                            vm.markers.push({
 	                                title: d.name,
 	                                postion: { lat: d.latitude, lg: d.longitude }
@@ -207,8 +204,6 @@
 	                    }
 
 	                    ;
-
-	                    // @todo : Store data result in markers array
 	                }, function (error) {
 	                    console.warn(error);
 	                });
@@ -26325,7 +26320,7 @@
 /* 49 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"search\">\n    <form v-on:submit.prevent=\"search()\">\n        <input placeholder=\"Search...\" v-model=\"query\" />\n        <input type=\"submit\" />\n    </form>\n</div>\n<div class=\"map\">\n    <map :center.sync=\"center\"\n         :zoom.sync=\"zoom\"\n         :bounds.sync=\"mapBounds\"\n         :options=\"mapOptions\">\n        <marker\n            v-for=\"m in markers\"\n            :position.sync=\"m.position\"\n            :icon.sync=\"m.icon\"\n            :clickable.sync=\"markersOptions.clickable\"\n            :draggable.sync=\"markersOptions.draggable\"\n            :opacity.sync=\"m.opacity\"\n            :title.sync=\"m.title\"\n        </marker>\n    </map>\n</div>\n";
+	module.exports = "\n<div class=\"search\">\n    <form v-on:submit.prevent=\"search()\">\n        <input placeholder=\"Search...\" v-model=\"query\" />\n        <input type=\"submit\" />\n    </form>\n</div>\n<div class=\"map\">\n    <map :center.sync=\"center\"\n         :zoom.sync=\"zoom\"\n         :bounds.sync=\"mapBounds\"\n         :options=\"mapOptions\">\n        <marker\n            v-for=\"m in markers\"\n            :position.sync=\"m.position\"\n            :clickable.sync=\"markersOptions.clickable\"\n            :draggable.sync=\"markersOptions.draggable\"\n            :title.sync=\"m.title\"\n        </marker>\n    </map>\n</div>\n";
 
 /***/ },
 /* 50 */
