@@ -1,0 +1,3 @@
+[submodule "api/web/stations"]
+	path = api/web/stations
+	url = https://github.com/captaintrain/stations.git

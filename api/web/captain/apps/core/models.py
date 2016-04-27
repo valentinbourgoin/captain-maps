@@ -1,11 +1,10 @@
-from django.contrib.gis.db import models
+from django.db import models
 
 ### 
 # Station model 
 ###
 class Station(models.Model): 
-	name         = models.CharField(max_length=255)
-	coordinates  = models.PointField()
-
-	objects = models.GeoManager()
-
+	uic       = models.CharField(max_length=7)
+	name      = models.CharField(max_length=255)
+	latitude  = models.FloatField()
+	longitude = models.FloatField()
