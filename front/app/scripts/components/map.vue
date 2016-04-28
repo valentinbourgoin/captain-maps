@@ -62,7 +62,14 @@
                 this.geocode(this.query).then(function() {
                     
                     // Search
-                    vm.$http.get('http://demo2503145.mockable.io/stations').then(function(stations) {
+                    var params = {
+                        lat_min: vm.mapBounds.H.H, 
+                        lat_max: vm.mapBounds.H.j, 
+                        lg_min: vm.mapBounds.j.H, 
+                        lg_max: vm.mapBounds.j.j, 
+                    };
+                    
+                    vm.$http.get('http://192.168.99.100/api/stations', params).then(function(stations) {
                         for(var d of stations.data.data) {
                             vm.markers.push({
                                 title: d.name, 
@@ -76,8 +83,7 @@
 
                 }, function(error) {
                     
-                    // Error
-                    // @todo
+                    console.warn(error);
 
                 });
             }, 

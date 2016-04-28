@@ -173,8 +173,18 @@
 	            var vm = this;
 	            this.geocode(this.query).then(function () {
 
+	                console.log("search");
+	                console.log(vm.mapBounds);
+
 	                // Search
-	                vm.$http.get('http://demo2503145.mockable.io/stations').then(function (stations) {
+	                var params = {
+	                    lat_min: vm.mapBounds.H.H,
+	                    lat_max: vm.mapBounds.H.j,
+	                    lg_min: vm.mapBounds.j.H,
+	                    lg_max: vm.mapBounds.j.j
+	                };
+	                console.log(params);
+	                vm.$http.get('http://192.168.99.100/api/stations', params).then(function (stations) {
 	                    var _iteratorNormalCompletion = true;
 	                    var _didIteratorError = false;
 	                    var _iteratorError = undefined;
@@ -209,9 +219,7 @@
 	                });
 	            }, function (error) {
 
-	                // Error
-	                // @todo
-
+	                console.warn(error);
 	            });
 	        },
 

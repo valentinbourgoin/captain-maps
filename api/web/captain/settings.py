@@ -40,6 +40,7 @@ INSTALLED_APPS = (
 
     # Apps
     'captain.apps.core',
+    'captain.apps.api',
 )
 
 MIDDLEWARE_CLASSES = (
