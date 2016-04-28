@@ -9,13 +9,15 @@
         <map :center.sync="center"
              :zoom.sync="zoom"
              :bounds.sync="mapBounds"
-             :options="mapOptions">
+             :options="mapOptions"
+             @g-idle="refreshMap">
             <marker
                 v-for="m in markers"
                 :position.sync="m.position"
+                :icon.sync="m.icon"
                 :clickable.sync="markersOptions.clickable"
                 :draggable.sync="markersOptions.draggable"
-                :title.sync="m.title"
+                :title.sync="m.title">
             </marker>
         </map>
     </div>
@@ -23,7 +25,8 @@
 
 <script>
 
-    import { Promise } from 'es6-promise';    
+    import { Promise } from 'es6-promise';
+    import { API_ROOT } from '../config.js';
     const VueGoogleMap = require('vue-google-maps');
 
     export default{
@@ -55,32 +58,12 @@
             /**
              * Search stations from given address
              * First, geocode the address to get coordinates
-             * Then, call API 
+             * Then, refresh map
              */
             search: function() {
                 let vm = this;
                 this.geocode(this.query).then(function() {
-                    
-                    // Search
-                    var params = {
-                        lat_min: vm.mapBounds.H.H, 
-                        lat_max: vm.mapBounds.H.j, 
-                        lg_min: vm.mapBounds.j.H, 
-                        lg_max: vm.mapBounds.j.j, 
-                    };
-                    
-                    vm.$http.get('http://192.168.99.100/api/stations', params).then(function(stations) {
-                        for(var d of stations.data.data) {
-                            vm.markers.push({
-                                title: d.name, 
-                                postion: {lat: d.latitude, lg: d.longitude}
-                            });
-                        };
-
-                    }, function(error) {
-                        console.warn(error);
-                    });
-
+                    vm.refreshMap();
                 }, function(error) {
                     
                     console.warn(error);
@@ -109,6 +92,35 @@
                     }, function (response) {
                         reject;
                     });
+                });
+            }, 
+
+            /**
+             * Refresh map : call API for actual bounds
+             */
+            refreshMap: function() {
+                var vm = this;
+                
+                // Search params : map bounds
+                var params = {
+                    lat_min: vm.mapBounds.getSouthWest().lat(), 
+                    lat_max: vm.mapBounds.getNorthEast().lat(),
+                    lg_min: vm.mapBounds.getSouthWest().lng(), 
+                    lg_max: vm.mapBounds.getNorthEast().lng(), 
+                };
+                
+                vm.$http.get(API_ROOT + 'stations/', params).then(function(stations) {
+                    vm.markers = [];
+                    for(var d of stations.data) {
+                        vm.markers.push({
+                            title: d.name, 
+                            position: {lat: d.latitude, lng: d.longitude}, 
+                            // icon: {url: 'http://www.hotel-albert1.com/medias/2013/07/picto-gare.png'}
+                        });
+                    };
+
+                }, function(error) {
+                    console.warn(error);
                 });
             }
 

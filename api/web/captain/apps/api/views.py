@@ -1,23 +1,44 @@
-from django.core import serializers
+#from django.core import serializers
 from django.http import HttpResponse
+from rest_framework import viewsets
+from rest_framework.response import Response
 
 from captain.apps.core.models import Station
+from . import serializers 
 
 LIMIT = 20
 
-def stations(request):
-	stations = Station.objects.all()
+# def stations(request):
+# 	stations = Station.objects.all()
 
-	# Get parameters
-	lat_min = request.GET.get('lat_min')
-	lat_max = request.GET.get('lat_max')
-	lg_min = request.GET.get('lg_min')
-	lg_max = request.GET.get('lg_max')
-	if(lat_min and lat_max, lg_min, lg_max):
-		stations = stations.filter(latitude__range=(lat_min, lat_max), longitude__range=(lg_min, lg_max))
+# 	# Get parameters
+# 	lat_min = request.GET.get('lat_min')
+# 	lat_max = request.GET.get('lat_max')
+# 	lg_min = request.GET.get('lg_min')
+# 	lg_max = request.GET.get('lg_max')
+# 	if(lat_min and lat_max, lg_min, lg_max):
+# 		stations = stations.filter(latitude__range=(lat_min, lat_max), longitude__range=(lg_min, lg_max))
 
-	stations = stations[:LIMIT]
+# 	stations = stations[:LIMIT]
 
-	# Serialize models and return data
-	data = serializers.serialize('json', stations)
-	return HttpResponse(data, content_type="application/json")
+# 	# Serialize models and return data
+# 	data = serializers.serialize('json', stations)
+# 	return HttpResponse(data, content_type="application/json")
+
+class StationViewSet(viewsets.ViewSet):
+    queryset = Station.objects.all()
+
+    def list(self, request):
+
+        # Get parameters
+        lat_min = request.GET.get('lat_min')
+        lat_max = request.GET.get('lat_max')
+        lg_min = request.GET.get('lg_min')
+        lg_max = request.GET.get('lg_max')
+        if(lat_min and lat_max, lg_min, lg_max):
+            stations = self.queryset.filter(latitude__range=(lat_min, lat_max), longitude__range=(lg_min, lg_max))
+        stations = stations[:LIMIT]
+
+        # queryset = queryset[:LIMIT]
+        serializer = serializers.StationSerializer(stations, many=True)
+        return Response(serializer.data)
