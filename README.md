@@ -2,9 +2,7 @@ Train station finder
 ====================
 Find the nearest train station on a map !
 
-I used the Captain Train open data, found [here](https://github.com/captaintrain/stations).  Frontend app is built in [VueJS](https://github.com/vuejs) with NPM / browserify compilation process. The backend API is a python app, using [Django REST Framework](http://www.django-rest-framework.org/), running in [Docker](https://www.docker.com/) component. Stations objects are imported in proper PgSQL database.
-
-----------
+I used the Captain Train open data, found [here](https://github.com/captaintrain/stations).  Frontend app is built in [VueJS](https://github.com/vuejs) with gulp / webpack compilation process. The backend API is a python app, using [Django REST Framework](http://www.django-rest-framework.org/), running in [Docker](https://www.docker.com/) component. Stations objects are imported in proper PgSQL database.
 
 
 Installation
