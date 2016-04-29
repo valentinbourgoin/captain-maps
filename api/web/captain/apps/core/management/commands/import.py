@@ -7,18 +7,20 @@ from django.core.exceptions import ObjectDoesNotExist
 from captain.apps.core.models import Station
 from captain import settings
 
+# Prevent UTF8 encoding issues
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-### 
-# Command to sync all stations data from CSV file
-###
 class Command(BaseCommand):
+	"""
+	Command used to sync CSV data with current DB models
+	Stations CSV list from https://github.com/captaintrain/stations.git
+	If station already exists, update it 
+	"""
 	help = "Get stations data"
 	filename = os.path.join(settings.PROJECT_DIR, '../stations/stations.csv')
 
 	def handle(self, *args, **options): 
-		
 		self.stdout.write("Opening %s..." % self.filename)
 		f = open(self.filename)
 		reader = csv.reader(f, delimiter=';')
@@ -37,7 +39,6 @@ class Command(BaseCommand):
 				self.stdout.write("Saving %s" % station.name)
 			except: 
 				self.stdout.write("Error saving %s" % station.name)
-
 
 		f.close()
 

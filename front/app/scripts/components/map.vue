@@ -64,10 +64,8 @@
                 let vm = this;
                 this.geocode(this.query).then(function() {
                     vm.refreshMap();
-                }, function(error) {
-                    
+                }, function(error) {          
                     console.warn(error);
-
                 });
             }, 
 
